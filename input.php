@@ -1,32 +1,15 @@
 <?php
-session_start();
-
-    $id = 0;
-    $merk = "";
-    $price = "";
-    
-    $db = mysqli_connect('35.192.174.154', 'root', 'inhoroot', 'rbpltest');
-
-    if(mysqli_connect_error()){
-        echo "Failed to connect to database: " . mysqli_connect_error();
+    include "action.php";
+    if(!isset($_SESSION['login_user'])){
+        header('location: index.php');
     }
-
-
-    if (isset($_POST['input'])) {
-        $name = mysqli_real_escape_string($db, $_POST['name']);
-        $details = mysqli_real_escape_string($db, $_POST['details']);
-        $date = mysqli_real_escape_string($db, $_POST['date']);
-        $time_start = mysqli_real_escape_string($db, $_POST['time_start']);
-        $time_end = mysqli_real_escape_string($db, $_POST['time_end']);
-        $place = mysqli_real_escape_string($db, $_POST['place']);
-      
-
-        $query = "INSERT INTO events (name,details,date,time_start,time_end,place)
-                  VALUES('$name', '$details', '$date', '$time_start', '$time_end', '$place')";
-        mysqli_query($db, $query);
-        header('location: main.php');
+    if(isset($_GET['logout'])){
+        session_destroy();
+        unset($_SESSION['username']);
+        header("location: index.php");
     }
 ?>
+
 <!DOCTYPE html>  
 <html>  
     <head>  
@@ -63,11 +46,11 @@ session_start();
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Welcome, User
+                        Welcome, <?php echo $_SESSION['login_user'];?>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">My Events</a>
-                        <a class="dropdown-item" href="#">Log Out</a>
+                        <a class="dropdown-item" href="myEvents.php">My Events</a>
+                        <a class="dropdown-item" href="input.php?logout=1">Log Out</a>
                         </div>
                     </li>
                 </ul>
@@ -88,7 +71,7 @@ session_start();
             
             <h2>Penambahan Event</h2><br/>
 
-            <form id="inputform" method="post" action="">
+            <form id="inputform" method="POST" action="action.php">
  
                 <div class="form-group row">  
                 <label for="name">Nama Event:</label>  
@@ -106,35 +89,35 @@ session_start();
                 </div>
  
                 <div class="form-group row">  
-                <label for="time_start">Jam Mulai:</label>  
-                <input type="time" class="form-control" name="time_start" required>
+                <label for="time_start">Jam Mulai: (HH:MM)</label>  
+                <input type="text" class="form-control" name="time_start" required>
                 </div>  
 
                 <div class="form-group row">  
-                <label for="time_end">Jam Selesai:</label> 
-                <input type="time" class="form-control" name="time_end" required>
+                <label for="time_end">Jam Selesai: (HH:MM)</label> 
+                <input type="text" class="form-control" name="time_end" required>
                 </div>  
 
                 <div class="form-group row">  
-                <label for="ruang">Ruang Pelaksanaan:</label>  
-                <select class="form-control" name="ruang">
-                    <option value="1">1101</option>
-                    <option value="2">1102</option>
-                    <option value="3">2103</option>
-                    <option value="4">2208</option>
-                    <option value="5">2209</option>
-                    <option value="6">3101</option>
-                    <option value="7">3102</option>
-                    <option value="8">4101</option>
-                    <option value="9">4102</option>
-                    <option value="10">4201</option>
-                    <option value="11">4202</option>
+                <label for="place">Ruang Pelaksanaan:</label>  
+                <select class="form-control" name="place">
+                    <option value="1101">1101</option>
+                    <option value="1102">1102</option>
+                    <option value="2103">2103</option>
+                    <option value="2208">2208</option>
+                    <option value="2209">2209</option>
+                    <option value="3101">3101</option>
+                    <option value="3102">3102</option>
+                    <option value="4101">4101</option>
+                    <option value="4102">4102</option>
+                    <option value="4201">4201</option>
+                    <option value="4202">4202</option>
                 </select>
                 </div>  
  
                 <div class="text-center">  
-                    <button  type="submit"  class="btn btn-success text-center">Tambahkan Event</button>  
-                    <a href=""  class="btn btn-danger">Batal</a>  
+                    <button  type="submit" name="input"  class="btn btn-success text-center">Tambahkan Event</button>  
+                    <a href="main.php"  class="btn btn-danger">Batal</a>  
                 </div>  
                 </div>  
  

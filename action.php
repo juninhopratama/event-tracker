@@ -44,11 +44,29 @@ if(isset($_POST['login'])){
     }
 }
 
-//for deleting an event on myEvent.php
-if (isset($_GET['del'])) {
-	$id = $_GET['del'];
-	mysqli_query($db, "DELETE FROM events WHERE id=$id");
-	$_SESSION['message'] = "Events deleted!"; 
-	header('location: myEvents.php');
+if (isset($_POST['input'])) {
+    $name = $_POST['name'];
+    $details = $_POST['details'];
+    $date = $_POST['date'];
+    $time_start = $_POST['time_start'];
+    $time_end = $_POST['time_end'];
+    $place = $_POST['place'];
+    $organizer = $_SESSION['login_user'];
+  
+
+    $query = "INSERT INTO events (`name`, `date`, place, details, time_start, time_end, organizer)
+              VALUES('$name', '$date', '$place', '$details', '$time_start', '$time_end', '$organizer')";
+    mysqli_query($db,$query);
+    if(mysqli_connect_errno()){
+        echo "Failed to connect to database: " . mysqli_connect_error();
+    }else{
+        header('location: main.php');
+    }
 }
 
+if (isset($_GET['del'])) {
+        $id = $_GET['del'];
+        mysqli_query($db, "DELETE FROM events WHERE id=$id");
+        $_SESSION['message'] = "Events deleted!"; 
+        header('location: myEvents.php');
+}

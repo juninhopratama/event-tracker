@@ -41,7 +41,8 @@ if(isset($_GET['logout'])){
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="main.php">Main Menu</a>
-          <a class="dropdown-item" href="main.php?logout='1">Log Out</a>
+          <a class="dropdown-item" href="input.php">Input Event</a>
+          <a class="dropdown-item" href="myEvents.php?logout='1">Log Out</a>
         </div>
       </li>
       </ul>
@@ -55,7 +56,7 @@ if(isset($_GET['logout'])){
     <p> this is your list of events:
     <br />
 
-    <form action="landigpage.php" method="get">
+    <form action="myEvents.php" method="get">
     <label>Select based on month and year:</label>
     <select name="month">
         <option>- Month -</option>

@@ -35,7 +35,8 @@ if(isset($_GET['logout'])){
           ?>
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="#">My Events</a>
+          <a class="dropdown-item" href="input.php">Input Event</a>
+          <a class="dropdown-item" href="myEvents.php">My Events</a>
           <a class="dropdown-item" href="main.php?logout='1">Log Out</a>
         </div>
       </li>
