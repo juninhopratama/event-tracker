@@ -18,7 +18,7 @@
 <!-- AWAL  -->
 <nav class="navbar navbar-expand-lg text-uppercase sticky-top" style='background-color:black'>
   <div class="container"></div>
-    <h1 class="navbar-brand js-scroll-trigger text-white"><a href="">Home</a></h1>
+    <h1 class="navbar-brand js-scroll-trigger text-white"><a href="main.php">Home</a></h1>
     </nav>
 
     <div class="row text-center pt-5">
@@ -41,8 +41,8 @@
           <th>Lokasi</th> 
           <th>Penyelenggara</th> 
           <th>Deskripsi</th>
-          <th>Jam mulai</th>
-          <th>Jam selesai</th>
+          <th>Jam Mulai</th>
+          <th>Jam Selesai</th>
         </tr>
       </thead>
       <tbody>
@@ -50,24 +50,26 @@
        <?php 
        session_start();
        $db = mysqli_connect('35.192.174.154', 'root', 'inhoroot', 'rbpltest');
-
-       
+       if(isset($_GET['view'])){
+           $id = $_GET['view'];
+           $sql = "SELECT * FROM events WHERE id=$id";
+           $result = $db->query($sql);
       if($result->num_rows > 0){
                       while($row = $result->fetch_assoc()){
                         echo
                           "<tr>
-                          <td>" . $row["ID"] . "</td>
+                          <td>" . $row["id"] . "</td>
                           <td>" . $row["date"] . "</td>
                           <td>" . $row["name"] . "</td>
                           <td>" . $row["place"] . "</td>
                           <td>" . $row["organizer"] . "</td>
-                          <td>" . $row["description"] . "</td>
-                          <td>" . $row["start"] . "</td>
-                          <td>" . $row["end"] . "</td>
+                          <td>" . $row["details"] . "</td>
+                          <td>" . $row["time_start"] . "</td>
+                          <td>" . $row["time_end"] . "</td>
                           </tr>";
                       }
                     }
-                  
+                }
                     ?>
       </tbody>
     </table>
@@ -76,7 +78,11 @@
   <div class="col-sm-1"></div>
 
   </div>
-
+  <nav class="navbar navbar-expand-sm fixed-bottom justify-content-center">
+        <span class="navbar-text">
+          Made with ❤️ by Bayu Inho Ucha Nada
+        </span>
+        </nav>
 <!-- AKHIR  -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
