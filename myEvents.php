@@ -1,5 +1,13 @@
 <?php
 include "action.php";
+if(!isset($_SESSION['login_user'])){
+    header('location: index.php');
+}
+if(isset($_GET['logout'])){
+    session_destroy();
+    unset($_SESSION['username']);
+    header("location: index.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +37,7 @@ include "action.php";
       <ul class="navbar-nav ml-auto">
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Welcome, User
+          Welcome, <?php echo $_SESSION['login_user'];?>
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="main.php">Main Menu</a>
@@ -43,7 +51,7 @@ include "action.php";
     <br />
     <br />
     <br />
-    <h2> Hello, [user] </h2>
+    <h2> Hello, <?php echo $_SESSION['login_user'];?> </h2>
     <p> this is your list of events:
     <br />
 
@@ -99,17 +107,18 @@ include "action.php";
                     if(isset($_GET['month'])){
                       $month = $_GET['month'];
                       $year = $_GET['year'];
+                      $username = $_SESSION['login_user'];
                       if($month=="all" && $year!="all"){
                         $sql = "SELECT * FROM events
-                              WHERE year(date) = '$year'";
+                              WHERE year(date) = '$year' AND username='$username'";
                       }elseif($year=="all" && $month!="all"){
                         $sql = "SELECT * FROM events
-                              WHERE month(date) = '$month'";
+                              WHERE month(date) = '$month' AND username='$username'";
                       }elseif($month=="all" && $year=="all"){
-                        $sql = "SELECT * FROM events";
+                        $sql = "SELECT * FROM events WHERE username='$username'";
                       }else
                       $sql = "SELECT * FROM events
-                              WHERE month(date) = '$month' AND year(date) = '$year'";
+                              WHERE month(date) = '$month' AND year(date) = '$year' AND username='$username'";
                     }else{
                     $sql = "SELECT * FROM events";
                     }
