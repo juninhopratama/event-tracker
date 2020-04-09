@@ -1,3 +1,14 @@
+<?php
+include "action.php";
+if(!isset($_SESSION['login_user'])){
+    header('location: index.php');
+}
+if(isset($_GET['logout'])){
+    session_destroy();
+    unset($_SESSION['username']);
+    header("location: index.php");
+}
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -20,11 +31,12 @@
       <ul class="navbar-nav ml-auto">
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Welcome, User
+          Welcome, <?php echo $_SESSION['login_user'];
+          ?>
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="#">My Events</a>
-          <a class="dropdown-item" href="#">Log Out</a>
+          <a class="dropdown-item" href="main.php?logout='1">Log Out</a>
         </div>
       </li>
       </ul>
@@ -71,6 +83,7 @@
         </div>
         <div class="col-md-10">
         <div class="container">
+        <h5 class="text-center">Events List</h5>
             <table class="table table-hover">
                 <thead class="thead-dark">
                     <tr>
@@ -82,7 +95,7 @@
                 </thead>
                 <tbody>
                     <?php
-                    session_start();
+                    
                     $db = mysqli_connect('35.192.174.154', 'root', 'inhoroot', 'rbpltest');
                     if(isset($_GET['month'])){
                       $month = $_GET['month'];
@@ -108,7 +121,7 @@
                         echo
                           "<tr>
                           <td>" . $row["date"] . "</td>
-                          <td>" . $row["name"] . "</td>
+                          <td><a href='detailevent.php?view=".$row["id"]."'>" . $row["name"] . "</a></td>
                           <td>" . $row["place"] . "</td>
                           <td>" . $row["organizer"] . "</td>
                           </tr>";
