@@ -15,6 +15,7 @@ include "action.php";
     body{
       margin:20px;
     }
+
   </style>
   </head>
   
@@ -42,6 +43,8 @@ include "action.php";
     <br />
     <br />
     <br />
+    <h2> Hello, [user] </h2>
+    <p> this is your list of events:
     <br />
 
     <form action="landigpage.php" method="get">
