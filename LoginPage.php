@@ -1,5 +1,8 @@
 <?php
 include "action.php";
+if(isset($_SESSION['login_user'])){
+    header('location: main.php');
+}
 ?>
 
 <!DOCTYPE html>
