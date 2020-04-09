@@ -44,3 +44,11 @@ if(isset($_POST['login'])){
     }
 }
 
+//for deleting an event on myEvent.php
+if (isset($_GET['del'])) {
+	$id = $_GET['del'];
+	mysqli_query($db, "DELETE FROM events WHERE id=$id");
+	$_SESSION['message'] = "Events deleted!"; 
+	header('location: myEvents.php');
+}
+
