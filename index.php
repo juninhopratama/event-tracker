@@ -1,3 +1,9 @@
+<?php
+include "action.php";
+if(isset($_SESSION['login_user'])){
+    header('location: main.php');
+}
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -19,7 +25,7 @@
      <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-           <a class="nav-link" href="#">Log In</a>
+           <a class="nav-link" href="loginpage.php">Log In</a>
         </li>
       </ul>
     </div>
@@ -65,6 +71,7 @@
         </div>
         <div class="col-md-10">
         <div class="container">
+        <h5 class="text-center">Events List</h5>
             <table class="table table-hover">
                 <thead class="thead-dark">
                     <tr>
@@ -76,7 +83,6 @@
                 </thead>
                 <tbody>
                     <?php
-                    session_start();
                     $db = mysqli_connect('35.192.174.154', 'root', 'inhoroot', 'rbpltest');
                     if(isset($_GET['month'])){
                       $month = $_GET['month'];
@@ -102,7 +108,7 @@
                         echo
                           "<tr>
                           <td>" . $row["date"] . "</td>
-                          <td>" . $row["name"] . "</td>
+                          <td><a href='detailevent.php?view=".$row["id"]."'>" . $row["name"] . "</a></td>
                           <td>" . $row["place"] . "</td>
                           <td>" . $row["organizer"] . "</td>
                           </tr>";
