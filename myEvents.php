@@ -41,7 +41,7 @@ if(isset($_GET['logout'])){
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="main.php">Main Menu</a>
-          <a class="dropdown-item" href="#">Log Out</a>
+          <a class="dropdown-item" href="main.php?logout='1">Log Out</a>
         </div>
       </li>
       </ul>
@@ -103,24 +103,24 @@ if(isset($_GET['logout'])){
                 </thead>
                 <tbody>
                     <?php
+                    $username = $_SESSION['login_user'];
                     $db = mysqli_connect('35.192.174.154', 'root', 'inhoroot', 'rbpltest');
                     if(isset($_GET['month'])){
                       $month = $_GET['month'];
                       $year = $_GET['year'];
-                      $username = $_SESSION['login_user'];
                       if($month=="all" && $year!="all"){
                         $sql = "SELECT * FROM events
-                              WHERE year(date) = '$year' AND username='$username'";
+                              WHERE year(date) = '$year' AND organizer='$username'";
                       }elseif($year=="all" && $month!="all"){
                         $sql = "SELECT * FROM events
-                              WHERE month(date) = '$month' AND username='$username'";
+                              WHERE month(date) = '$month' AND organizer='$username'";
                       }elseif($month=="all" && $year=="all"){
-                        $sql = "SELECT * FROM events WHERE username='$username'";
+                        $sql = "SELECT * FROM events WHERE organizer='$username'";
                       }else
                       $sql = "SELECT * FROM events
-                              WHERE month(date) = '$month' AND year(date) = '$year' AND username='$username'";
+                              WHERE month(date) = '$month' AND year(date) = '$year' AND organizer='$username'";
                     }else{
-                    $sql = "SELECT * FROM events";
+                    $sql = "SELECT * FROM events WHERE organizer='$username'";
                     }
                     $result = $db->query($sql);
                     
