@@ -7,18 +7,18 @@ if(mysqli_connect_error()){
 }
 
 //to check if user already login or not
-$user_check = $_SESSION['login_user'];
+// $user_check = $_SESSION['login_user'];
    
-   $ses_sql = mysqli_query($db,"SELECT username FROM users WHERE username = '$user_check' ");
+//    $ses_sql = mysqli_query($db,"SELECT username FROM users WHERE username = '$user_check' ");
    
-   $row = mysqli_fetch_array($ses_sql,MYSQLI_ASSOC);
+//    $row = mysqli_fetch_array($ses_sql,MYSQLI_ASSOC);
    
-   $login_session = $row['username'];
+//    $login_session = $row['username'];
    
-   if(!isset($_SESSION['login_user'])){
-      header("location:LoginPage.php");
-      die();
-   }
+//    if(!isset($_SESSION['login_user'])){
+//       header("location:loginpage.php");
+//       die();
+//    }
 
 // for login
 if(isset($_POST['login'])){
@@ -43,5 +43,4 @@ if(isset($_POST['login'])){
         }
     }
 }
-
 
