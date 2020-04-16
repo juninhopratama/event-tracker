@@ -18,6 +18,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">  
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" href="style.css">
+
+        <script type="text/javascript" src="//code.jquery.com/jquery-compat-git.js"></script>
+
         <style>
 
         </style>
@@ -96,9 +99,12 @@
                     <input type="datetime-local" class="form-control" name="datetime_end" required>
                     </div>  
     
+                   
+
                     <div class="form-group row">  
+                    <div id="billdesc">
                     <label for="place">Ruang Pelaksanaan:</label>  
-                    <select class="form-control" name="place">
+                    <select id="test" class="form-control" name="place">
                         <option value="1101">1101</option>
                         <option value="1102">1102</option>
                         <option value="2103">2103</option>
@@ -110,9 +116,36 @@
                         <option value="4102">4102</option>
                         <option value="4201">4201</option>
                         <option value="4202">4202</option>
+                        <option class="editable" value="other">Other</option>
                     </select>
+                    <input class="editOption" style="display:none;"></input>
+                    </div> 
+                    
                     </div>  
      
+                    <script type="text/javascript"> var initialText = $('.editable').val();
+                    $('.editOption').val(initialText);
+
+                    $('#test').change(function(){
+                    var selected = $('option:selected', this).attr('class');
+                    var optionText = $('.editable').text();
+
+                    if(selected == "editable"){
+                    $('.editOption').show();
+
+                    
+                    $('.editOption').keyup(function(){
+                        var editText = $('.editOption').val();
+                        $('.editable').val(editText);
+                        $('.editable').html(editText);
+                    });
+
+                    }else{
+                    $('.editOption').hide();
+                    }
+                    });
+                    </script>
+
                     <div class="text-center">  
                         <button  type="submit" name="input"  class="btn btn-success text-center">Tambahkan Event</button>  
                         <a href="main.php"  class="btn btn-danger">Batal</a>  

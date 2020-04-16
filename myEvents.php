@@ -77,44 +77,14 @@ if(isset($_GET['logout'])){
         <div class="col-md-1">
         </div>
         <div class="col-md-10">
-    <form action="myEvents.php" method="get">
-    <label>Select based on month and year:</label>
-    <select name="month">
-        <option>- Month -</option>
-        <option value="all">All</option>
-        <option value="01">January</option>
-        <option value="02">Febuary</option>
-        <option value="03">March</option>
-        <option value="04">April</option>
-        <option value="05">May</option>
-        <option value="06">June</option>
-        <option value="07">July</option>
-        <option value="08">August</option>
-        <option value="09">September</option>
-        <option value="10">October</option>
-        <option value="11">November</option>
-        <option value="12">December</option>
-        </select>
-        <select name="year">
-        <option>- Year -</option>
-        <option value="all">All</option>
-        <option value="2023">2023</option>
-        <option value="2019">2022</option>
-        <option value="2018">2021</option>
-        <option value="2020">2020</option>
-        <option value="2019">2019</option>
-        <option value="2018">2018</option>
-        </select>
-    <input type="submit">
-    </form>
           <div class="container">
             <table class="table table-hover" style="background-color: #FFC940;">
                 <thead class="thead-dark">
                     <tr>
-                        <th style="background-color: #F48400;">Date</th>
+                        <th style="background-color: #F48400;">Date & Time Start</th>
+                        <th style="background-color: #F48400;">Date & Time End</th>
                         <th style="background-color: #F48400;">Event</th>
                         <th style="background-color: #F48400;">Place</th>
-                        <th style="background-color: #F48400;">Organizer</th>
                         <th style="background-color: #F48400;"></th>
                         <th style="background-color: #F48400;"></th>
                     </tr>
@@ -123,33 +93,22 @@ if(isset($_GET['logout'])){
                     <?php
                     $username = $_SESSION['login_user'];
                     $db = mysqli_connect('35.192.174.154', 'root', 'inhoroot', 'rbpltest');
-                    if(isset($_GET['month'])){
-                      $month = $_GET['month'];
-                      $year = $_GET['year'];
-                      if($month=="all" && $year!="all"){
-                        $sql = "SELECT * FROM events
-                              WHERE year(date) = '$year' AND organizer='$username'";
-                      }elseif($year=="all" && $month!="all"){
-                        $sql = "SELECT * FROM events
-                              WHERE month(date) = '$month' AND organizer='$username'";
-                      }elseif($month=="all" && $year=="all"){
-                        $sql = "SELECT * FROM events WHERE organizer='$username'";
-                      }else
-                      $sql = "SELECT * FROM events
-                              WHERE month(date) = '$month' AND year(date) = '$year' AND organizer='$username'";
-                    }else{
-                    $sql = "SELECT * FROM events WHERE organizer='$username'";
-                    }
+                    $sql = "SELECT id, DATE_FORMAT(datetime_start, '%W') as hari, DATE_FORMAT(datetime_start, '%e') as tanggal, DATE_FORMAT(datetime_start, '%M') as bulan, DATE_FORMAT(datetime_start, '%Y') as tahun, DATE_FORMAT(datetime_start, '%H') as jam, DATE_FORMAT(datetime_start, '%i') as menit,
+                    DATE_FORMAT(datetime_end, '%W') as hari_end, DATE_FORMAT(datetime_end, '%e') as tanggal_end, DATE_FORMAT(datetime_end, '%M') as bulan_end, DATE_FORMAT(datetime_end, '%Y') as tahun_end, DATE_FORMAT(datetime_end, '%H') as jam_end, DATE_FORMAT(datetime_end, '%i') as menit_end,
+                                        name, place, organizer, details
+                                        FROM rbpltest.events
+                                        WHERE organizer = '$username'
+                                       ";
                     $result = $db->query($sql);
-                    
+
                     if($result->num_rows > 0){
                       while($row = $result->fetch_assoc()){
                         echo
                           "<tr>
-                          <td>" . $row["date"] . "</td>
+                          <td>" . $row["hari"] .", " . $row["tanggal"] . " " . $row["bulan"] . " " . $row["tahun"] . " " . $row["jam"] . ":" . $row["menit"] . "</td>
+                          <td>" . $row["hari_end"] .", " . $row["tanggal_end"] . " " . $row["bulan_end"] . " " . $row["tahun_end"] . " " . $row["jam_end"] . ":" . $row["menit_end"] . "</td>
                           <td>" . $row["name"] . "</td>
                           <td>" . $row["place"] . "</td>
-                          <td>" . $row["organizer"] . "</td>
                           <td><a href='edit.php?edit=".$row["id"]."' style='color:green'>Edit</a></td>
                           <td><a href='action.php?del=".$row["id"]."' style='color:red'>Delete</a></td>
                           </tr>";

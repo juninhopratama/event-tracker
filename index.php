@@ -78,6 +78,7 @@ if(isset($_SESSION['login_user'])){
                 </div>
 
                 <div class="col-10">
+                <h3 class="text-center">Event List</h3>
                 <table id="example" class="table table-striped table-bordered mydatatable" style="background-color: #FFC940;">
                 <thead class="thead-dark">
                     <tr>
