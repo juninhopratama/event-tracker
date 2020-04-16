@@ -39,7 +39,7 @@ if(isset($_POST['login'])){
           header("location:main.php");
         }
         else{
-            echo "Invalid username and password";
+            header("location:loginsalah.php");
         }
     }
 }

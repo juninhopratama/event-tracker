@@ -37,6 +37,10 @@ if(isset($_SESSION['login_user'])){
                 <div class="container">
                 <form id="loginform" method="POST" action="action.php">
                     <p> Hi, <u>Fungsionaris HMSI!*</u><br>Please input the username and password as given by the admin below</p>
+
+                    <div class="container bg-danger">
+                        <p style="font-size:14px;color:white;">Invalid username/password!</p>
+                    </div>
                         <div class="form-group">
                         <label for="username">Username:</label><br>
                         <input type="text" name="username" placeholder="Enter Username" class="form-control" value="" required>
