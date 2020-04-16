@@ -13,6 +13,23 @@ if(isset($_SESSION['login_user'])){
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap.min.css">
+   
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/b-1.6.1/r-2.2.3/sp-1.0.1/datatables.min.css"/>
+ 
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.20/b-1.6.1/r-2.2.3/sp-1.0.1/datatables.min.js"></script>
+
+
+    <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+	  <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    
+    <script type="text/javascript" class="init">
+	
+  $(document).ready(function() {
+    $('#example').DataTable();
+  } );
+  
+    </script>
 
     <title>Event Tracker</title>
   </head>
@@ -35,47 +52,17 @@ if(isset($_SESSION['login_user'])){
     <br />
     <br />
     <br />
-
-    <form action="index.php" method="get">
-    <label>Select based on month and year:</label>
-    <select name="month">
-        <option>- Month -</option>
-        <option value="all">All</option>
-        <option value="01">January</option>
-        <option value="02">Febuary</option>
-        <option value="03">March</option>
-        <option value="04">April</option>
-        <option value="05">May</option>
-        <option value="06">June</option>
-        <option value="07">July</option>
-        <option value="08">August</option>
-        <option value="09">September</option>
-        <option value="10">October</option>
-        <option value="11">November</option>
-        <option value="12">December</option>
-        </select>
-        <select name="year">
-        <option>- Year -</option>
-        <option value="all">All</option>
-        <option value="2023">2023</option>
-        <option value="2019">2022</option>
-        <option value="2018">2021</option>
-        <option value="2020">2020</option>
-        <option value="2019">2019</option>
-        <option value="2018">2018</option>
-        </select>
-    <input type="submit">
-    </form>
     <div class="row">
         <div class="col-md-1">
         </div>
         <div class="col-md-10">
         <div class="container">
-        <h5 class="text-center">Events List</h5>
-            <table class="table table-hover">
+        <h3 class="text-center pt-5 pb-2">Events List</h3>
+            <table id="example" class="table table-striped table-bordered mydatatable">
                 <thead class="thead-dark">
                     <tr>
-                        <th>Date</th>
+                        <th>Date & Time Start</th>
+                        <th>Date & Time End</th>
                         <th>Event</th>
                         <th>Place</th>
                         <th>Organizer</th>
@@ -84,30 +71,18 @@ if(isset($_SESSION['login_user'])){
                 <tbody>
                     <?php
                     $db = mysqli_connect('35.192.174.154', 'root', 'inhoroot', 'rbpltest');
-                    if(isset($_GET['month'])){
-                      $month = $_GET['month'];
-                      $year = $_GET['year'];
-                      if($month=="all" && $year!="all"){
-                        $sql = "SELECT * FROM events
-                              WHERE year(date) = '$year'";
-                      }elseif($year=="all" && $month!="all"){
-                        $sql = "SELECT * FROM events
-                              WHERE month(date) = '$month'";
-                      }elseif($month=="all" && $year=="all"){
-                        $sql = "SELECT * FROM events";
-                      }else
-                      $sql = "SELECT * FROM events
-                              WHERE month(date) = '$month' AND year(date) = '$year'";
-                    }else{
-                    $sql = "SELECT * FROM events";
-                    }
+                    $sql = "SELECT id, DATE_FORMAT(datetime_start, '%W') as hari, DATE_FORMAT(datetime_start, '%e') as tanggal, DATE_FORMAT(datetime_start, '%M') as bulan, DATE_FORMAT(datetime_start, '%Y') as tahun, DATE_FORMAT(datetime_start, '%H') as jam, DATE_FORMAT(datetime_start, '%i') as menit,
+                    DATE_FORMAT(datetime_end, '%W') as hari_end, DATE_FORMAT(datetime_end, '%e') as tanggal_end, DATE_FORMAT(datetime_end, '%M') as bulan_end, DATE_FORMAT(datetime_end, '%Y') as tahun_end, DATE_FORMAT(datetime_end, '%H') as jam_end, DATE_FORMAT(datetime_end, '%i') as menit_end,
+                                        name, place, organizer, details
+                                        FROM rbpltest.events";
                     $result = $db->query($sql);
                     
                     if($result->num_rows > 0){
                       while($row = $result->fetch_assoc()){
                         echo
                           "<tr>
-                          <td>" . $row["date"] . "</td>
+                          <td>" . $row["hari"] .", " . $row["tanggal"] . " " . $row["bulan"] . " " . $row["tahun"] . " " . $row["jam"] . ":" . $row["menit"] . "</td>
+                          <td>" . $row["hari_end"] .", " . $row["tanggal_end"] . " " . $row["bulan_end"] . " " . $row["tahun_end"] . " " . $row["jam_end"] . ":" . $row["menit_end"] . "</td>
                           <td><a href='detailevent.php?view=".$row["id"]."'>" . $row["name"] . "</a></td>
                           <td>" . $row["place"] . "</td>
                           <td>" . $row["organizer"] . "</td>
@@ -124,15 +99,23 @@ if(isset($_SESSION['login_user'])){
         </div>
     </div>
     <br />
-        <nav class="navbar navbar-expand-sm fixed-bottom justify-content-center">
+        <nav class="navbar navbar-expand-sm bottom justify-content-center">
         <span class="navbar-text">
           Made with ❤️ by Bayu Inho Ucha Nada
         </span>
         </nav>
     <!-- Optional JavaScript -->
+
+</script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.js>"></script> 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+      
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+   
   </body>
 </html>

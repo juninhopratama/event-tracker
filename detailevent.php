@@ -1,3 +1,14 @@
+<?php
+include "action.php";
+if(!isset($_SESSION['login_user'])){
+    header('location: index.php');
+}
+if(isset($_GET['logout'])){
+    session_destroy();
+    unset($_SESSION['username']);
+    header("location: index.php");
+}
+?>
 <!DOCTYPE html>
 <html>
 
@@ -16,10 +27,49 @@
 
 <body>
 <!-- AWAL  -->
-<nav class="navbar navbar-expand-lg text-uppercase sticky-top" style='background-color:black'>
-  <div class="container"></div>
-    <h1 class="navbar-brand js-scroll-trigger text-white"><a href="main.php">Home</a></h1>
-    </nav>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Event Tracker</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top">
+        <a class="navbar-brand" href="#">Event Tracker</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+        </button>
+  
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link" href="input.php">Input Event</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="myEvents.php">My Event</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="main.php">Home</a>
+    </li>
+    
+  </ul>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
+    <li>
+    <a class="nav-item text-white" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Welcome, <?php echo $_SESSION['login_user'];
+          ?>
+        </a>
+</li>
+</nav>
+<br>
+     
+
+
 
     <div class="row text-center pt-5">
 
@@ -35,37 +85,39 @@
     <table class="table table-bordered">
       <thead class="thead-dark">
         <tr>
-            <th>ID</th>
-            <th>Tanggal Event</th>
+          <th>ID</th>
           <th>Nama</th>
-          <th>Lokasi</th> 
+          <th>Lokasi</th>
           <th>Penyelenggara</th> 
-          <th>Deskripsi</th>
-          <th>Jam Mulai</th>
-          <th>Jam Selesai</th>
+          <th>Deskripsi</th> 
+          <th>Tanggal & Jam Mulai</th>
+          <th>Tanggal & Jam Selesai</th>
         </tr>
       </thead>
       <tbody>
 
        <?php 
-       session_start();
        $db = mysqli_connect('35.192.174.154', 'root', 'inhoroot', 'rbpltest');
        if(isset($_GET['view'])){
            $id = $_GET['view'];
-           $sql = "SELECT * FROM events WHERE id=$id";
+           $sql = "SELECT id, DATE_FORMAT(datetime_start, '%W') as hari, DATE_FORMAT(datetime_start, '%e') as tanggal, DATE_FORMAT(datetime_start, '%M') as bulan, DATE_FORMAT(datetime_start, '%Y') as tahun, DATE_FORMAT(datetime_start, '%H') as jam, DATE_FORMAT(datetime_start, '%i') as menit,
+           DATE_FORMAT(datetime_end, '%W') as hari_end, DATE_FORMAT(datetime_end, '%e') as tanggal_end, DATE_FORMAT(datetime_end, '%M') as bulan_end, DATE_FORMAT(datetime_end, '%Y') as tahun_end, DATE_FORMAT(datetime_end, '%H') as jam_end, DATE_FORMAT(datetime_end, '%i') as menit_end,
+                               name, place, organizer, details
+                               FROM rbpltest.events
+                              WHERE id=$id
+                    ";
            $result = $db->query($sql);
       if($result->num_rows > 0){
                       while($row = $result->fetch_assoc()){
                         echo
                           "<tr>
                           <td>" . $row["id"] . "</td>
-                          <td>" . $row["date"] . "</td>
                           <td>" . $row["name"] . "</td>
                           <td>" . $row["place"] . "</td>
                           <td>" . $row["organizer"] . "</td>
                           <td>" . $row["details"] . "</td>
-                          <td>" . $row["time_start"] . "</td>
-                          <td>" . $row["time_end"] . "</td>
+                          <td>" . $row["hari"] .", " . $row["tanggal"] . " " . $row["bulan"] . " " . $row["tahun"] . " " . $row["jam"] . ":" . $row["menit"] . "</td>
+                          <td>" . $row["hari_end"] .", " . $row["tanggal_end"] . " " . $row["bulan_end"] . " " . $row["tahun_end"] . " " . $row["jam_end"] . ":" . $row["menit_end"] . "</td>
                           </tr>";
                       }
                     }
@@ -78,7 +130,7 @@
   <div class="col-sm-1"></div>
 
   </div>
-  <nav class="navbar navbar-expand-sm fixed-bottom justify-content-center">
+  <nav class="navbar navbar-expand-sm bottom justify-content-center">
         <span class="navbar-text">
           Made with ❤️ by Bayu Inho Ucha Nada
         </span>

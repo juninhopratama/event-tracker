@@ -13,9 +13,8 @@ if(isset($_GET['logout'])){
     $id = 0;
     $name = "";
     $details = "";
-    $date = "";
-    $time_start = "";
-    $time_end = "";
+    $datetime_start = "";
+    $datetime_end = "";
     $place = "";
     
     $db = mysqli_connect('35.192.174.154', 'root', 'inhoroot', 'rbpltest');
@@ -32,9 +31,8 @@ if (isset($_GET['edit'])) {
         $n = mysqli_fetch_array($record);
         $name = $n['name'];
         $details = $n['details'];
-        $date = $n['date'];
-        $time_start = $n['time_start'];
-        $time_end = $n['time_end'];
+        $datetime_start = $n['datetime_start'];
+        $datetime_end = $n['datetime_end'];
         $place = $n['place'];
     }
 }
@@ -43,13 +41,12 @@ if (isset($_POST['update'])) {
     $id = $_POST['id'];
     $name = $_POST['name'];
     $details = $_POST['details'];
-    $date = $_POST['date'];
-    $time_start = $_POST['time_start'];
-    $time_end = $_POST['time_end'];
+    $datetime_start = $_POST['time_start'];
+    $datetime_end = $_POST['time_end'];
     $place = $_POST['place'];
 
-    mysqli_query($db, "UPDATE events SET `name`='$name', details='$details', `date`='$date', time_start='$time_start',
-    time_end='$time_end', place='$place' WHERE id='$id'");
+    mysqli_query($db, "UPDATE events SET `name`='$name', details='$details', datetime_start='$datetime_start',
+    datetime_end='$datetime_end', place='$place' WHERE id='$id'");
     $_SESSION['message'] = "Address updated!"; 
     header('location: myEvents.php');
 }
@@ -60,6 +57,16 @@ if (isset($_POST['update'])) {
         <meta charset="utf-8">  
         <title>Edit Event</title>  
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> 
+
+        <script>
+        function toggleField(hideObj,showObj){
+        hideObj.disabled=true;        
+        hideObj.style.display='none';
+        showObj.disabled=false;   
+        showObj.style.display='inline';
+        showObj.focus();
+        }
+        </script>
 
         <style>
 
@@ -131,18 +138,13 @@ if (isset($_POST['update'])) {
             </div>   
 
             <div class="form-group row">  
-                <label for="date">Tanggal Pelaksanaan:</label>  
-                    <input type="date" class="form-control" name="date" value="<?php echo $date; ?>">  
+                <label for="time_start">Tanggal & Jam Mulai:</label>  
+                    <input type="text" class="form-control" name="datetime_start" value="<?php echo $datetime_start; ?>">  
             </div>  
 
             <div class="form-group row">  
-                <label for="time_start">Jam Mulai:</label>  
-                    <input type="text" class="form-control" name="time_start" value="<?php echo $time_start; ?>">  
-            </div>  
-
-            <div class="form-group row">  
-                <label for="time_end">Jam Selesai:</label>  
-                    <input type="text" class="form-control" name="time_end" value="<?php echo $time_end; ?>">  
+                <label for="time_end">Tanggal & Jam Selesai:</label>  
+                    <input type="text" class="form-control" name="datetime_end" value="<?php echo $datetime_end; ?>">  
             </div>  
 
             <div class="form-group row">  
@@ -163,12 +165,13 @@ if (isset($_POST['update'])) {
             </div>  
 
             <div class="text-center">  
-                    <button  type="submit"  class="btn btn-success" name="update">Update Event</button>  
+                    <button  type="submit"  class="btn btn-success" name="update">Update Event</button>
+                    <a href="myEvents.php"  class="btn btn-danger">Batal</a> 
                 </div> 
             </div>  
             </form>  
         </div>  
-        <nav class="navbar navbar-expand-sm fixed-bottom justify-content-center">
+        <nav class="navbar navbar-expand-sm bottom justify-content-center">
             <span class="navbar-text">
             Made with ❤️ by Bayu Inho Ucha Nada
             </span>

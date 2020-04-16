@@ -17,6 +17,7 @@
         <title>Penambahan Event</title>  
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
+
         <style>
 
             .loginbox {
@@ -82,20 +83,15 @@
                 <label for="details">Deskripsi:</label>    
                 <textarea class="form-control" rows="5" name="details" placeholder="Masukkan Deskripsi" required></textarea>
                 </div>
-
-                <div class="form-group row">  
-                <label for="date">Tanggal Pelaksanaan:</label>  
-                <input type="date" class="form-control" name="date" required>  
-                </div>
  
                 <div class="form-group row">  
-                <label for="time_start">Jam Mulai: (HH:MM)</label>  
-                <input type="text" class="form-control" name="time_start" required>
-                </div>  
+                <label for="datetime_start">Tanggal & Jam Mulai:</label>  
+                <input type="datetime-local" class="form-control" name="datetime_start" required>
+                </div>
 
                 <div class="form-group row">  
-                <label for="time_end">Jam Selesai: (HH:MM)</label> 
-                <input type="text" class="form-control" name="time_end" required>
+                <label for="datetime_end">Tanggal & Jam Selesai:</label> 
+                <input type="datetime-local" class="form-control" name="datetime_end" required>
                 </div>  
 
                 <div class="form-group row">  
@@ -123,7 +119,7 @@
  
             </form>  
         </div>
-        <nav class="navbar navbar-expand-sm fixed-bottom justify-content-center">
+        <nav class="navbar navbar-expand-sm bottom justify-content-center">
             <span class="navbar-text">
                 Made with ❤️ by Bayu Inho Ucha Nada
             </span>

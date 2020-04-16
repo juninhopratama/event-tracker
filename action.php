@@ -47,15 +47,14 @@ if(isset($_POST['login'])){
 if (isset($_POST['input'])) {
     $name = $_POST['name'];
     $details = $_POST['details'];
-    $date = $_POST['date'];
-    $time_start = $_POST['time_start'];
-    $time_end = $_POST['time_end'];
+    $datetime_start = $_POST['datetime_start'];
+    $datetime_end = $_POST['datetime_end'];
     $place = $_POST['place'];
     $organizer = $_SESSION['login_user'];
   
 
-    $query = "INSERT INTO events (`name`, `date`, place, details, time_start, time_end, organizer)
-              VALUES('$name', '$date', '$place', '$details', '$time_start', '$time_end', '$organizer')";
+    $query = "INSERT INTO events (name, place, details, datetime_start, datetime_end, organizer)
+              VALUES('$name', '$place', '$details', '$datetime_start', '$datetime_end', '$organizer')";
     mysqli_query($db,$query);
     if(mysqli_connect_errno()){
         echo "Failed to connect to database: " . mysqli_connect_error();
