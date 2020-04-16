@@ -77,6 +77,7 @@ if(isset($_GET['logout'])){
             </nav>
 
     <!--ISINYAAA-->
+
         <div class="container-fluid" style="margin-top: 80px;">
             <div class="row">
                 <div class="col-1">
@@ -96,6 +97,7 @@ if(isset($_GET['logout'])){
                 </div>
 
                 <div class="col-10">
+                <h3 class="text-center">Event List</h3>
                 <table id="example" class="table table-striped table-bordered mydatatable" style="background-color: #FFC940;">
                 <thead class="thead-dark">
                     <tr>

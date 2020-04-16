@@ -41,8 +41,8 @@ if (isset($_POST['update'])) {
     $id = $_POST['id'];
     $name = $_POST['name'];
     $details = $_POST['details'];
-    $datetime_start = $_POST['time_start'];
-    $datetime_end = $_POST['time_end'];
+    $datetime_start = $_POST['datetime_start'];
+    $datetime_end = $_POST['datetime_end'];
     $place = $_POST['place'];
 
     mysqli_query($db, "UPDATE events SET `name`='$name', details='$details', datetime_start='$datetime_start',
@@ -59,6 +59,8 @@ if (isset($_POST['update'])) {
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">  
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" href="style.css">
+
+        <script type="text/javascript" src="//code.jquery.com/jquery-compat-git.js"></script>
 
         <script>
         function toggleField(hideObj,showObj){
@@ -138,7 +140,7 @@ if (isset($_POST['update'])) {
         
                     <div class="form-group row">  
                         <label for="details">Deskripsi:</label>  
-                            <input type="text" class="form-control" name="details" value="<?php echo $details; ?>">   
+                        <textarea class="form-control" rows="5" name="details" value="<?php echo $details; ?>"><?php echo $details; ?></textarea>  
                     </div>   
         
                     <div class="form-group row">  
@@ -152,21 +154,49 @@ if (isset($_POST['update'])) {
                     </div>  
         
                     <div class="form-group row">  
-                        <label for="place">Ruang Pelaksanaan:</label>  
-                        <select class="form-control" name="place" value="<?php echo $place; ?>">
-                            <option value="1101">1101</option>
-                            <option value="1102">1102</option>
-                            <option value="2103">2103</option>
-                            <option value="2208">2208</option>
-                            <option value="2209">2209</option>
-                            <option value="3101">3101</option>
-                            <option value="3102">3102</option>
-                            <option value="4101">4101</option>
-                            <option value="4102">4102</option>
-                            <option value="4201">4201</option>
-                            <option value="4202">4202</option>
-                        </select>
+                    <div id="billdesc">
+                    <label for="place">Ruang Pelaksanaan:</label>  
+                    <select id="test" class="form-control" name="place" value="<?php echo $place; ?>">
+                    <option class="editable" value="<?php echo $place; ?>"><?php echo $place; ?></option>
+                        <option value="1101">1101</option>
+                        <option value="1102">1102</option>
+                        <option value="2103">2103</option>
+                        <option value="2208">2208</option>
+                        <option value="2209">2209</option>
+                        <option value="3101">3101</option>
+                        <option value="3102">3102</option>
+                        <option value="4101">4101</option>
+                        <option value="4102">4102</option>
+                        <option value="4201">4201</option>
+                        <option value="4202">4202</option>
+                    </select>
+                    <input class="editOption" style="display:none;"></input>
+                    </div> 
+                    
                     </div>  
+     
+                    <script type="text/javascript"> var initialText = $('.editable').val();
+                    $('.editOption').val(initialText);
+
+                    $('#test').change(function(){
+                    var selected = $('option:selected', this).attr('class');
+                    var optionText = $('.editable').text();
+
+                    if(selected == "editable"){
+                    $('.editOption').show();
+
+                    
+                    $('.editOption').keyup(function(){
+                        var editText = $('.editOption').val();
+                        $('.editable').val(editText);
+                        $('.editable').html(editText);
+                    });
+
+                    }else{
+                    $('.editOption').hide();
+                    }
+                    });
+                    </script>
         
                     <div class="text-center">  
                             <button  type="submit"  class="btn btn-success" name="update">Update Event</button>
