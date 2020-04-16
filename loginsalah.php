@@ -16,7 +16,8 @@ if(isset($_SESSION['login_user'])){
 
         <style>
         body{
-            background-color:  #f89d13;
+            background-image:url('hmsilogin.png');
+            background-size:auto 800px;
             overflow-x: hidden;
             overflow-y: hidden;
         }
@@ -28,7 +29,7 @@ if(isset($_SESSION['login_user'])){
 </head>
 <body>
     <div class="row" style="height: 1024px;">
-        <div class="col md-8" style="background-color: #f89d13;background-image:url('hmsilogin.png');">
+        <div class="col md-8">
         </div>
         <div class="col-md-4" style="background-color: white; padding:30px;">
             <div class="container">

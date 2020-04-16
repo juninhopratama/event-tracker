@@ -68,8 +68,6 @@ if(isset($_GET['logout'])){
 
             <br>
 
-            <h4>Hello, <u><?php echo $_SESSION['login_user'];?></u> !</h4>
-            <p style="font-size:18px;"> This is your list of events:</p>
             
             <br />
 
@@ -77,7 +75,11 @@ if(isset($_GET['logout'])){
         <div class="col-md-1">
         </div>
         <div class="col-md-10">
+        
           <div class="container">
+          
+          <h4>Hello, <u><?php echo $_SESSION['login_user'];?></u> !</h4>
+            <p style="font-size:18px;"> This is your list of events:</p>
             <table class="table table-hover" style="background-color: #FFC940;">
                 <thead class="thead-dark">
                     <tr>
