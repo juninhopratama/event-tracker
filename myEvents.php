@@ -19,43 +19,64 @@ if(isset($_GET['logout'])){
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     
-    <style>
-    body{
-      margin:20px;
-    }
-
-  </style>
+    <link rel="stylesheet" href="style.css">
+    
   </head>
   
   <body>
-    <nav class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top">
-        <a class="navbar-brand" href="#">Event Tracker</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-         <span class="navbar-toggler-icon"></span>
-        </button>
-     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto">
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Welcome, <?php echo $_SESSION['login_user'];?>
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="main.php">Main Menu</a>
-          <a class="dropdown-item" href="input.php">Input Event</a>
-          <a class="dropdown-item" href="myEvents.php?logout='1">Log Out</a>
+   <!--NAVBAR-->    
+   <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #100032;">
+            <a class="navbar-brand" href="#">Event Tracker</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+             <span class="navbar-toggler-icon"></span>
+            </button>
+      
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                <a class="nav-link" href="main.php">Main</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="input.php">Input Events</a>
+                </li>
+            </ul>
+            
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Welcome, <?php echo $_SESSION['login_user'];?>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="myEvents.php?logout='1">Log Out</a>
+                </div>
+                </li>
+                </ul>
+              </div>
+            </nav>
+
+  <!-- ISINYA -->  
+  <div class="container-fluid" style="margin-top: 80px;">
+            <div class="row">
+                <div class="col-1">
+                <img src="https://obs.line-scdn.net/0m0190949972518a97ef6ee3d2f7a80755fc2cf5decc43/preview" alt="logohmsi" class="img-thumbnail" style="border:0px;">
+                </div>
+                <div class="col-11">
+                    <h2>Himpunan Mahasiswa Sistem Informasi</h2>
+                    <h6>Institut Teknologi Sepuluh Nopember Surabaya</h6>
+                </div>
+            </div>
+
+            <br>
+
+            <h4>Hello, <u><?php echo $_SESSION['login_user'];?></u> !</h4>
+            <p style="font-size:18px;"> This is your list of events:</p>
+            
+            <br />
+
+      <div class="row">
+        <div class="col-md-1">
         </div>
-      </li>
-      </ul>
-    </div>
-    </nav>
-
-    <br />
-    <br />
-    <br />
-    <h2> Hello, <?php echo $_SESSION['login_user'];?> </h2>
-    <p> this is your list of events:
-    <br />
-
+        <div class="col-md-10">
     <form action="myEvents.php" method="get">
     <label>Select based on month and year:</label>
     <select name="month">
@@ -86,20 +107,16 @@ if(isset($_GET['logout'])){
         </select>
     <input type="submit">
     </form>
-    <div class="row">
-        <div class="col-md-1">
-        </div>
-        <div class="col-md-10">
-        <div class="container">
-            <table class="table table-hover">
+          <div class="container">
+            <table class="table table-hover" style="background-color: #FFC940;">
                 <thead class="thead-dark">
                     <tr>
-                        <th>Date</th>
-                        <th>Event</th>
-                        <th>Place</th>
-                        <th>Organizer</th>
-                        <th></th>
-                        <th></th>
+                        <th style="background-color: #F48400;">Date</th>
+                        <th style="background-color: #F48400;">Event</th>
+                        <th style="background-color: #F48400;">Place</th>
+                        <th style="background-color: #F48400;">Organizer</th>
+                        <th style="background-color: #F48400;"></th>
+                        <th style="background-color: #F48400;"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -142,19 +159,20 @@ if(isset($_GET['logout'])){
                     ?>
                 </tbody>
             </table>
-        </div>
+          </div>
         </div>
         <div class="col-md-1">
         </div>
     </div> 
 
-    
-    <br />
-        <nav class="navbar navbar-expand-sm fixed-bottom justify-content-center">
-        <span class="navbar-text">
-          Made with ❤️ by Bayu Inho Ucha Nada
-        </span>
-        </nav>
+  </div>
+
+    <!--FOOTER-->
+  <nav class="navbar navbar-expand-sm bottom justify-content-center">
+    <span class="navbar-text">
+    Made with ❤️ by Bayu Inho Ucha Nada
+    </span>
+  </nav>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

@@ -15,66 +15,45 @@ if(isset($_SESSION['login_user'])){
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
         <style>
-            body{
-                /* margin: 0px;
-                padding: 0px;
-                background-color: #f89d13;
-                background: url("https://wallpapercave.com/wp/wp4955602.jpg");
-                background-position: center;
-                background-size: auto;
-                background-repeat: repeat; */
-            }
-
-            .loginbox {
-            background-color: #1b120f;
-            padding:20px;
-            width: max-content;
-            height: fit-content;
-            border-color: #e6dedd;
-            border-width: 0.1cm;
-            border-style: solid;
-            border-radius: 10px;
-            color: white;
-            position: absolute;
-            top: 50%;
-            
+        body{
+            background-color:  #f89d13;
+            overflow-x: hidden;
+            overflow-y: hidden;
         }
-        </style>
-    </head>
 
-    <body>
-
-        <div class="row">
-            <div class="col-4">
-            </div>
-
-            <div class="col-4">
-                <div class="loginbox">
-                    <h1 style="text-align: center;">Event Tracker</h1>
-                    <br>
-                    
-                    <form id="loginform" method="POST" action="action.php">
+        .centeredText{
+            text-align:center;
+        }
+    </style>
+</head>
+<body>
+    <div class="row" style="height: 1024px;">
+        <div class="col md-8" style="background-color: #f89d13;">
+        </div>
+        <div class="col-md-4" style="background-color: white; padding:30px;">
+            <div class="container">
+                <h1 style="text-align: center;">Event Tracker</h1>
+                <br>
+                <div class="container">
+                <form id="loginform" method="POST" action="action.php">
+                    <p> Hi, <u>Fungsionaris HMSI!*</u><br>Please input the username and password as given by the admin below</p>
                         <div class="form-group">
                         <label for="username">Username:</label><br>
                         <input type="text" name="username" placeholder="Enter Username" class="form-control" value="" required>
-                        <br>
                         <label for="password">Password:</label><br>
                         <input type="password" name="password" placeholder="Enter Password" class="form-control" value="" required>
                         </div>
+                        <p style="font-size:10px">*only fungsionaris could access account.<br>if you forgot the password, contact admin immediately</p>
                         <br>
+                        <div class="centeredText">
                         <button  type="submit"  class="btn  btn-primary" name="login">Login</button>
+                        <a href="index.php"  class="btn  btn-danger">Cancel</a>
+                        </div>
+                    </form>
                 </div>
             </div>
-
-            <div class="col-4">   
-            </div>
         </div>
-
-        <nav class="navbar navbar-expand-sm fixed-bottom justify-content-center">
-        <span class="navbar-text">
-          Made with ❤️ by Bayu Inho Ucha Nada
-        </span>
-        </nav>
+    </div>
 
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         
