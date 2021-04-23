@@ -17,7 +17,7 @@ if(isset($_GET['logout'])){
     $datetime_end = "";
     $place = "";
     
-    $db = mysqli_connect('35.192.174.154', 'root', 'inhoroot', 'rbpltest');
+    $db = mysqli_connect('host', 'user', 'pass', 'db');
 
     if(mysqli_connect_errno()){
         echo "Failed to connect to database: " . mysqli_connect_errno();
