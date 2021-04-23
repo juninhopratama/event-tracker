@@ -1,6 +1,6 @@
 <?php
 session_start();
-$db = mysqli_connect('35.192.174.154', 'root', 'inhoroot', 'rbpltest');
+$db = mysqli_connect('host', 'user', 'pass', 'dbname');
 
 if(mysqli_connect_error()){
     echo "Failed to connect to database: " . mysqli_connect_error();
